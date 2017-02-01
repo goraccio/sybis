@@ -1,0 +1,14 @@
+table.table.table-striped
+  tr
+    th ID сделки
+    th ID товара
+    th Стоимость
+    th Дата покупки
+  - @sales.each do |sale|
+    tr
+      td=sale.id
+      td=sale.product_id
+      td=sale.cost
+      td=sale.date_of_purchase
+
+= paginate @sales
