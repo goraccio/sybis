@@ -1,0 +1,10 @@
+table
+  tr
+    th Артикул
+    th Наименование
+  - @products.each do |product|
+    tr
+      td=product.id
+      td=product.name
+
+= paginate @products
