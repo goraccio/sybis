@@ -1,11 +1,22 @@
-table.table.table-striped
-  tr
-    th Товар
-    th Общая сумма продаж
-  - @products.each do |product, sales|
-    tr
-      td= product.name
-      td= total_sales(sales)
+.row
+  .col-md-3
+    .product_filter
+      form action="#{total_path}" method="get"
+        - Product.all.each do |p|
+          .filter-window
+            = p.name
+            = check_box_tag 'ids[]', p.id, checked=false
+    .spacer
+    = submit_tag  "Применить", class: 'btn btn-success', name: nil
+  .col-md-9
+    table.table.table-striped
+      tr
+        th Товар
+        th Общая сумма продаж
+      - @products.each do |product, sales|
+        tr
+          td= product.name
+          td= total_sales(sales)
 
-.spacer
-  = button_to "Скачать отчёт .xls", generatepr_path, method: ":post", class: 'btn btn-success'
+    .spacer
+      = button_to "Скачать отчёт .xls", generatepr_path(ids: params[:ids]), method: ":post", class: 'btn btn-success'

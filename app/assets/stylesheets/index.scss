@@ -32,3 +32,12 @@
 .spacer {
   margin-top: 40px;
 }
+
+.product_filter {
+  height: 500px;
+  overflow-y: auto;
+  .filter-window input {
+    float: left;
+    margin-right: 5px;
+  }
+}

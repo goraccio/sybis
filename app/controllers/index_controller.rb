@@ -1,5 +1,6 @@
 class IndexController < ApplicationController
   include IndexHelper
+  before_action :load_selected_products, only: [:product_cost_report, :generate_product_report]
   before_action :authenticate_user!
 
   def monthly_report
@@ -7,7 +8,7 @@ class IndexController < ApplicationController
   end
 
   def product_cost_report
-    @products = Sale.all.group_by{ |p| p.product}
+    @products = @selected_sales.group_by{ |p| p.product}
   end
 
   def generate_monthly_report
@@ -31,7 +32,7 @@ class IndexController < ApplicationController
   def generate_product_report
     require 'spreadsheet'
 
-    @products = Sale.all.group_by{ |p| p.product}
+    @products = @selected_sales.group_by{ |p| p.product}
 
     book = Spreadsheet::Workbook.new
     sheet1 = book.create_worksheet name: 'Лист 1'
@@ -43,5 +44,15 @@ class IndexController < ApplicationController
     new_file = "#{Rails.root}/public/product_reports/product-report-#{Time.now.strftime('%Y-%m-%d_%H-%M-%S')}.xls"
     book.write new_file
     send_file new_file
+  end
+
+  private
+
+  def load_selected_products
+    if params[:ids]
+      @selected_sales = Sale.where(product_id: params[:ids])
+    else
+      @selected_sales = Sale.all
+    end
   end
 end
