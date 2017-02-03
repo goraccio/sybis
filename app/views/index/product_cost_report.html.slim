@@ -6,3 +6,6 @@ table.table.table-striped
     tr
       td= product.name
       td= total_sales(sales)
+
+.spacer
+  = button_to "Скачать отчёт .xls", generatepr_path, method: ":post", class: 'btn btn-success'
