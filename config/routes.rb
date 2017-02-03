@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   devise_for :users
-  root 'product#index'
+  root 'products#index'
   resources :products
   resources :sales
   get 'monthly', controller: 'index', action: 'monthly_report'
