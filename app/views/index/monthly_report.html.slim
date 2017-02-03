@@ -1,0 +1,12 @@
+table.table.table-striped
+  tr
+    th Артикул
+    th Наименование
+  - @sales.each do |month, sales|
+    tr
+      td= month.strftime("%B %Y")
+      td= total_sales(sales)
+
+.spacer
+= button_to "Скачать отчёт .xls", generatemr_path, method: ":post", class: 'btn btn-success'
+

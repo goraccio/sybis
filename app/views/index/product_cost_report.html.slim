@@ -1,0 +1,8 @@
+table.table.table-striped
+  tr
+    th Артикул
+    th Наименование
+  - @products.each do |product, sales|
+    tr
+      td= product.name
+      td= total_sales(sales)
