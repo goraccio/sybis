@@ -1,23 +1,27 @@
 h1 Отчет по продуктам
 .row
-  .col-md-3
-    .product_filter
-      form action="#{total_path}" method="get"
+  .col-md-4
+    form action="#{total_path}" method="get"
+      .product_filter
         - Product.all.each do |p|
           .filter-window
             = p.name
-            = check_box_tag 'ids[]', p.id, checked=false
-    .spacer
-    = submit_tag  "Применить", class: 'btn btn-success', name: nil
-  .col-md-9
-    table.table.table-striped
-      tr
-        th Товар
-        th Общая сумма продаж
-      - @products.each do |product, sales|
+            = check_box_tag 'ids[]', p.id, checked = params[:ids].present? && params[:ids].include?(p.id.to_s)
+      .spacer
+      = date_field(:date_of_purchase, '', value: params[:date_of_purchase], class: 'form-control')
+      .spacer
+      = submit_tag  "Применить", class: 'btn btn-success filter-button', name: nil
+      = link_to "Сбросить фильтры", total_path,  class: 'btn btn-danger filter-button'
+  .col-md-8
+    .product-table
+      table.table.table-striped
         tr
-          td= product.name
-          td= total_sales(sales)
+          th Товар
+          th Общая сумма продаж
+        - @products.each do |product, sales|
+          tr
+            td= product.name
+            td= total_sales(sales)
 
     .spacer
-      = button_to "Скачать отчёт .xls", generatepr_path(ids: params[:ids]), method: ":post", class: 'btn btn-success'
+      = button_to "Скачать отчёт .xls", generatepr_path(ids: params[:ids], date_of_purchase: params[:date_of_purchase]), method: ":post", class: 'btn btn-success'
