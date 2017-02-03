@@ -49,7 +49,7 @@ class IndexController < ApplicationController
   private
 
   def load_selected_products
-    if params[:ids] && !params[:date_of_purchase]
+    if params[:ids] && (params[:date_of_purchase][0] == '' || !params[:date_of_purchase])
       @selected_sales = Sale.where(product_id: params[:ids])
     elsif !params[:ids] && params[:date_of_purchase]
       @selected_sales = Sale.where(date_of_purchase: params[:date_of_purchase])
