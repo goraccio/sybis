@@ -10,6 +10,8 @@
 # Ignore all logfiles and tempfiles.
 /log/*.log
 /tmp
+/public/monthly_reports
+/public/product_reports
 
 .idea
 .env
